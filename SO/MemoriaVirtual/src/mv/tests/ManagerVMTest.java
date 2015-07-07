@@ -195,8 +195,6 @@ public class ManagerVMTest {
 		frames.add(new Frame(3, 3));
 		frames.add(new Frame(1, 1));
 		
-		System.out.println(frames);
-		managerVm.printMV();
 		
 		assertEquals(5, managerVm.getFrames().size() );
 		assertEquals("adicionaFrameAcimaLimiteDaThread.verificando frames",
@@ -230,8 +228,6 @@ public class ManagerVMTest {
 		frames.add(new Frame(3, 3));
 		frames.add(new Frame(1, 1));
 		frames.add(new Frame(3, 4));
-		
-		managerVm.printMV();
 		
 		assertEquals(5, managerVm.getFrames().size() );
 		assertEquals("adicionaFrameAcimaLimiteDaThread.verificando frames",

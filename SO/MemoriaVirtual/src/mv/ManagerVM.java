@@ -14,7 +14,6 @@ public class ManagerVM {
 	private Map<Integer, List<Frame>> hashMap;
 	private int limit;
 	private static ManagerVM instance;
-	private Disk disk;
 	private static final int limitFramesPerThread = 2;
 	private static final int limitFramesTotal = 10;
 
@@ -35,49 +34,59 @@ public class ManagerVM {
 	private ManagerVM(int limit) {
 		this.limit = limit;
 		frames = new LinkedList<Frame>();
-		disk = new Disk();
 		hashMap = new HashMap<Integer, List<Frame>>();
 	}
 
 	public synchronized void  addFrame(Frame frame) {
-		System.out.print("Antes:  " + Arrays.toString(frames.toArray()) + " - ");
+		//System.out.print("Antes:  " + Arrays.toString(frames.toArray()) + " - ");
+		
+		boolean lpt = false;
+		boolean lpf = false;
 		
 		Frame frameRemoved = null;
 		List<Frame> list = hashMap.get(frame.threadId);
 
+		System.out.println();
+		printThreadMV(frame.threadId);
+		System.out.println(Arrays.toString(frames.toArray()));
+		
 		if(list != null && list.contains(frame)) {
 			frameRemoved = frame;
 			frames.remove(frameRemoved);
 			frames.add(frame);
-			System.out.println("Depois: " + Arrays.toString(frames.toArray()));
+			
+			System.out.println( "Trocando: " + frame);
+			System.out.println(Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: " + lpf);
+			System.out.println();
 			return;
 		}
 		
+		
+		
 		if (list != null && list.size() >= limitFramesPerThread) {
-			frameRemoved = removeFrame(list, frame);
+			lpt = true;
+			frameRemoved = list.remove(0);
+			hashMap.get(frame.threadId).remove(frameRemoved);
+			frames.remove(frameRemoved);
 		}
 
 		if (frames.size() >= limit) {
+			lpf = true;
 			frameRemoved = frames.removeFirst();
 			hashMap.get(frameRemoved.threadId).remove(frameRemoved);
 		}
 
-		disk.saveFrameInDisk(frameRemoved);
 		if (list == null) {
 			hashMap.put(frame.threadId, new ArrayList<Frame>());
 		}
 		
 		add(frame);
 		
-		System.out.println("Depois: " + Arrays.toString(frames.toArray()));
+		System.out.println("Entrando: " + frame + " - Saindo: "+ frameRemoved);
+		System.out.println(Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: " + lpf);
+		System.out.println();
 	}
 	
-	private Frame removeFrame(List<Frame> list, Frame frame) {
-		Frame frameRemoved = list.remove(0);
-		hashMap.get(frame.threadId).remove(frameRemoved);
-		frames.remove(frameRemoved);
-		return frameRemoved;
-	}
 	
 	private void add(Frame frame) {
 		hashMap.get(frame.threadId).add(frame);
@@ -88,9 +97,6 @@ public class ManagerVM {
 		return Collections.unmodifiableList(frames);
 	}
 	
-	public void printMV() {
-		System.out.println(Arrays.toString(frames.toArray()));
-	}
 	
 	public void printThreadMV(int tid) {
 		List<Frame> list = hashMap.get(tid);

@@ -15,6 +15,14 @@ public class ThreadMV implements Runnable{
 		managerVM = ManagerVM.getInstance();
 		
 	}
+	
+	public void join() {
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void run() {
@@ -23,9 +31,9 @@ public class ThreadMV implements Runnable{
 			long tid = this.thread.getId();
 			
 			Frame frame = new Frame((int) tid, new Random().nextInt(50));
-			managerVM.printThreadMV(frame.threadId);
+			//managerVM.printThreadMV(frame.threadId);
 			managerVM.addFrame(frame);
-			managerVM.printThreadMV(frame.threadId);
+			//managerVM.printThreadMV(frame.threadId);
 			
 			totalPaginas++;
 			sleep3seconds();
