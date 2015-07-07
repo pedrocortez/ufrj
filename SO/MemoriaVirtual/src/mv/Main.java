@@ -4,8 +4,8 @@ package mv;
 public class Main {
 	
 	public static void main(String[] args) {
-		ManagerVM.getInstance(5);
-		ThreadMV[] threads = new ThreadMV[4];
+		ManagerVM.getInstance(64, 4);
+		ThreadMV[] threads = new ThreadMV[20];
 		int numT = 0;
 		while (numT < threads.length) {
 			ThreadMV threadMV = new ThreadMV();

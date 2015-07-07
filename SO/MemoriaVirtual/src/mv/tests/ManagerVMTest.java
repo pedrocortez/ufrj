@@ -31,7 +31,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFrameAcimaLimiteNaMV() {
-		managerVm = ManagerVM.getInstance(2);
+		managerVm = ManagerVM.getInstance(2, 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));
@@ -43,7 +43,7 @@ public class ManagerVMTest {
 	@Test
 	public void adicionaFrameAcimaLimiteERemoveMaisAntigo() {
 		
-		managerVm = ManagerVM.getInstance(2);
+		managerVm = ManagerVM.getInstance(2, 2);
 		
 		List<Frame> frames = new ArrayList<Frame>();
 		
@@ -63,7 +63,7 @@ public class ManagerVMTest {
 
 	@Test
 	public void adicionaFrameAcimaLimiteEVerificaSwipe() {
-		managerVm = ManagerVM.getInstance(2);
+		managerVm = ManagerVM.getInstance(2, 2);
 		
 		managerVm.addFrame(new Frame(2, 1));
 		managerVm.addFrame(new Frame(2, 2));
@@ -85,7 +85,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFrameAcimaLimiteDaThread() {
-		managerVm = ManagerVM.getInstance(3);
+		managerVm = ManagerVM.getInstance(3, 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));
@@ -105,7 +105,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFramesIguais() {
-		managerVm = ManagerVM.getInstance(3);
+		managerVm = ManagerVM.getInstance(3, 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 1));
@@ -125,7 +125,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFramesRepetidosComNaoRepetidos() {
-		managerVm = ManagerVM.getInstance(3);
+		managerVm = ManagerVM.getInstance(3, 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));
@@ -146,7 +146,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFramesMultiplasThreads() {
-		managerVm = ManagerVM.getInstance(5);
+		managerVm = ManagerVM.getInstance(5, 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));
@@ -173,7 +173,7 @@ public class ManagerVMTest {
 
 	@Test
 	public void adicionaFramesMultiplasThreads2() {
-		managerVm = ManagerVM.getInstance(5);
+		managerVm = ManagerVM.getInstance(5 , 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));
@@ -205,7 +205,7 @@ public class ManagerVMTest {
 	
 	@Test
 	public void adicionaFramesMultiplasThreads3() {
-		managerVm = ManagerVM.getInstance(5);
+		managerVm = ManagerVM.getInstance(5 , 2);
 		
 		managerVm.addFrame(new Frame(1, 1));
 		managerVm.addFrame(new Frame(1, 2));

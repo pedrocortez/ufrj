@@ -5,14 +5,22 @@ import java.util.Random;
 public class ThreadMV implements Runnable{
 
 	private Thread thread;
-	private int totalPaginas = 0;
+	private int totalPages = 0;
 	ManagerVM managerVM;
+	private int limitPages;
 	
 	public ThreadMV() {
+		limitPages = 50;
 		thread = new Thread(this);
 		thread.start();
-		
 		managerVM = ManagerVM.getInstance();
+		
+	}
+
+	public ThreadMV(int limit) {
+		this();
+		this.limitPages = limit;
+		
 		
 	}
 	
@@ -27,7 +35,7 @@ public class ThreadMV implements Runnable{
 	@Override
 	public void run() {
 		
-		while (totalPaginas < 10) {
+		while (totalPages < limitPages) {
 			long tid = this.thread.getId();
 			
 			Frame frame = new Frame((int) tid, new Random().nextInt(50));
@@ -35,7 +43,7 @@ public class ThreadMV implements Runnable{
 			managerVM.addFrame(frame);
 			//managerVM.printThreadMV(frame.threadId);
 			
-			totalPaginas++;
+			totalPages++;
 			sleep3seconds();
 		}
 		

@@ -12,27 +12,39 @@ public class ManagerVM {
 
 	private LinkedList<Frame> frames;
 	private Map<Integer, List<Frame>> hashMap;
-	private int limit;
+	private int limitFrames;
+	private int limitFramesPerThread;
 	private static ManagerVM instance;
-	private static final int limitFramesPerThread = 2;
-	private static final int limitFramesTotal = 10;
+	private static final int LIMITFRAMESPERTHREAD = 4;
+	private static final int LIMITFRAMESTOTAL = 64;
 
-	public static ManagerVM getInstance(int limit) {
-		if (instance == null) {
-			instance = new ManagerVM(limit);
-		}
-		return instance;
-	}
-
+	
 	public static ManagerVM getInstance() {
 		if (instance == null) {
-			instance = new ManagerVM(limitFramesTotal);
+			instance = new ManagerVM(LIMITFRAMESTOTAL, LIMITFRAMESPERTHREAD);
+		}
+		return instance;
+	}
+	
+	public static ManagerVM getInstance(int limit) {
+		if (instance == null) {
+			instance = new ManagerVM(limit, LIMITFRAMESPERTHREAD);
 		}
 		return instance;
 	}
 
-	private ManagerVM(int limit) {
-		this.limit = limit;
+	public static ManagerVM getInstance(int limit, int limitFramesPerThread) {
+		if (instance == null) {
+			instance = new ManagerVM(limit, limitFramesPerThread);
+		}
+		return instance;
+	}
+
+	
+
+	private ManagerVM(int limitFrames, int limitFramesPerThread) {
+		this.limitFrames = limitFrames;
+		this.limitFramesPerThread = limitFramesPerThread;
 		frames = new LinkedList<Frame>();
 		hashMap = new HashMap<Integer, List<Frame>>();
 	}
@@ -70,7 +82,7 @@ public class ManagerVM {
 			frames.remove(frameRemoved);
 		}
 
-		if (frames.size() >= limit) {
+		if (frames.size() >= limitFrames) {
 			lpf = true;
 			frameRemoved = frames.removeFirst();
 			hashMap.get(frameRemoved.threadId).remove(frameRemoved);
