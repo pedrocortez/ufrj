@@ -46,7 +46,7 @@ public class Frame {
 
 	@Override
 	public String toString() {
-		return threadId + " - " + id;
+		return threadId + "-" + id;
 	}
 	
 	

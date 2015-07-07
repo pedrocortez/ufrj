@@ -5,10 +5,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		int totalFrames             = 64;
-		int totalFramesThread       = 4;
-		int totalThreads            = 20;
-		int totalPagesCreateThreads = 50;
+		int totalFrames             = 5;
+		int totalFramesThread       = 2;
+		int totalThreads            = 4;
+		int totalPagesCreateThreads = 6;
 		
 		
 		ManagerVM.getInstance(totalFrames, totalFramesThread);

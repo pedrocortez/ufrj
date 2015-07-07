@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class ThreadMV implements Runnable{
 
+
+	
 	private Thread thread;
 	private int totalPages = 0;
 	ManagerVM managerVM;
@@ -38,7 +40,7 @@ public class ThreadMV implements Runnable{
 		while (totalPages < limitPages) {
 			long tid = this.thread.getId();
 			
-			Frame frame = new Frame((int) tid, new Random().nextInt(50));
+			Frame frame = new Frame((int) tid, new Random().nextInt(5));
 			//managerVM.printThreadMV(frame.threadId);
 			managerVM.addFrame(frame);
 			//managerVM.printThreadMV(frame.threadId);
