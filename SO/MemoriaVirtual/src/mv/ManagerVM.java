@@ -50,7 +50,6 @@ public class ManagerVM {
 	}
 
 	public synchronized void  addFrame(Frame frame) {
-		//System.out.print("Antes:  " + Arrays.toString(frames.toArray()) + " - ");
 		
 		boolean lpt = false;
 		boolean lpf = false;
@@ -95,7 +94,7 @@ public class ManagerVM {
 		add(frame);
 		
 		System.out.println("Entrando: " + frame + " - Saindo: "+ frameRemoved);
-		System.out.println(Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: " + lpf);
+		System.out.println("Size " + frames.size() + " - " +Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: " + lpf);
 		System.out.println();
 	}
 	
