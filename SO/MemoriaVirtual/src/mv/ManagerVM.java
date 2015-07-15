@@ -25,6 +25,7 @@ public class ManagerVM {
 	private static ManagerVM instance;
 	private static final int LIMITFRAMESPERTHREAD = 4;
 	private static final int LIMITFRAMESTOTAL = 64;
+	Disk disk = new Disk();
 
 	public static ManagerVM getInstance() {
 		if (instance == null) {
@@ -63,17 +64,23 @@ public class ManagerVM {
 		Frame frameRemoved = null;
 		List<Frame> list = hashMap.get(frame.threadId);
 
-		System.out.println();
-		System.out.println("Swap:   " + swap);
-		printThreadMV(frame.threadId);
-		System.out.println("Frames: " + Arrays.toString(frames.toArray()));
-		
+		// System.out.println();
+		disk.diskNewLine();
+		disk.saveInDisk("Swap:   " + swap);
+		disk.saveInDisk(printThreadMVreturn(frame.threadId));
+		disk.saveInDisk("Frames: " + Arrays.toString(frames.toArray()));
+		// System.out.println("Swap:   " + swap);
+		// printThreadMV(frame.threadId);
+		// System.out.println("Frames: " + Arrays.toString(frames.toArray()));
 
 		if (list != null && list.contains(frame)) {
 			frameRemoved = frame;
 			frames.remove(frameRemoved);
 			frames.add(frame);
 
+			disk.saveInDisk("Trocando: " + frame);
+			disk.saveInDisk(Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: " + lpf);
+			disk.diskNewLine();
 			System.out.println("Trocando: " + frame);
 			System.out.println(Arrays.toString(frames.toArray()) + " lpt: "
 					+ lpt + " lpf: " + lpf);
@@ -98,12 +105,16 @@ public class ManagerVM {
 			hashMap.get(frameRemoved.threadId).remove(frameRemoved);
 		}
 
-		
 		add(frame);
 
+		disk.saveInDisk("Entrando: " + frame + " - Saindo: " + frameRemoved);
+		disk.saveInDisk("Size " + frames.size() + " - Frames: "
+				+ Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: "
+				+ lpf);
+		disk.diskNewLine();
 		System.out.println("Entrando: " + frame + " - Saindo: " + frameRemoved);
 		addSwap(frameRemoved);
-		System.out.println("Size " + frames.size() + " - Frames: "  
+		System.out.println("Size " + frames.size() + " - Frames: "
 				+ Arrays.toString(frames.toArray()) + " lpt: " + lpt + " lpf: "
 				+ lpf);
 		System.out.println();
@@ -118,12 +129,13 @@ public class ManagerVM {
 	}
 
 	private void addSwap(Frame frame) {
-		if(frame == null)
+		if (frame == null)
 			return;
 		if (swap.get(frame.threadId) == null) {
 			swap.put(frame.threadId, new ArrayList<Frame>());
 		}
-		System.out.println("Entrando swap: " + frame );
+		disk.saveInDisk("Entrando swap: " + frame);
+		System.out.println("Entrando swap: " + frame);
 		swap.get(frame.threadId).add(frame);
 	}
 
@@ -136,7 +148,8 @@ public class ManagerVM {
 
 	private void removeFromSwap(Frame frame) {
 		if (swap.get(frame.threadId) != null) {
-			System.out.println("Saindo swap: " + frame );
+			disk.saveInDisk("Saindo swap: " + frame);
+			System.out.println("Saindo swap: " + frame);
 			swap.get(frame.threadId).remove(frame);
 		}
 	}
@@ -157,6 +170,21 @@ public class ManagerVM {
 		} else {
 			System.out.println("Frame Thread: " + "[]");
 		}
+	}
+
+	public String printThreadMVreturn(int tid) {
+		List<Frame> list = hashMap.get(tid);
+		String str = null;
+		if (list != null) {
+			str = "Frame Thread: " + Arrays.toString(list.toArray());
+			System.out.println("Frame Thread: "
+					+ Arrays.toString(list.toArray()));
+		} else {
+			str = "Frame Thread: " + "[]";
+			System.out.println("Frame Thread: " + "[]");
+		}
+		return str;
+
 	}
 
 	public void clearMV() {

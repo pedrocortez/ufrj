@@ -32,6 +32,42 @@ public class Disk {
 		}
 	}
 	
+	public synchronized void saveInDisk(String str) {
+		
+		File file = new File("arquivos/Relatorio3.txt" );
+		try {
+			// Create file if it does not exist
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
+			
+			out.write(str);
+			out.newLine();
+			out.close();
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public synchronized  void diskNewLine() {
+		
+		File file = new File("arquivos/Relatorio2.txt" );
+		try {
+			// Create file if it does not exist
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
+			
+			out.newLine();
+			out.close();
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void clearAllFiles() {
 		File dir = new File("arquivos");
 		for(File file: dir.listFiles()) {

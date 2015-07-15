@@ -10,9 +10,11 @@ public class ThreadMV implements Runnable{
 	private int totalPages = 0;
 	ManagerVM managerVM;
 	private int limitPages;
+	private int rangePages;
 	
 	public ThreadMV() {
 		limitPages = 50;
+		rangePages = 50;
 		thread = new Thread(this);
 		thread.start();
 		managerVM = ManagerVM.getInstance();
@@ -22,6 +24,13 @@ public class ThreadMV implements Runnable{
 	public ThreadMV(int limit) {
 		this();
 		this.limitPages = limit;
+		
+		
+	}
+	public ThreadMV(int limit, int qtdPages) {
+		this();
+		this.limitPages = limit;
+		this.rangePages = qtdPages;
 		
 		
 	}
@@ -40,7 +49,7 @@ public class ThreadMV implements Runnable{
 		while (totalPages < limitPages) {
 			long tid = this.thread.getId();
 			
-			Frame frame = new Frame((int) tid, new Random().nextInt(5));
+			Frame frame = new Frame((int) tid, new Random().nextInt(rangePages));
 			//managerVM.printThreadMV(frame.threadId);
 			managerVM.addFrame(frame);
 			//managerVM.printThreadMV(frame.threadId);
